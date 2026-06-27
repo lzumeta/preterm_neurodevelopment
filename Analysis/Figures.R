@@ -6,7 +6,6 @@ library(summata)
 library(lme4)
 
 ## source functions
-source("Analysis/functions.R", echo = TRUE)
 source("Analysis/forestPlot_v2/autoforest_v2.R", echo = T)
 source("Analysis/forestPlot_v2/lmforest_v2.R", echo = T)
 source("Analysis/forestPlot_v2/number_utils.R")
@@ -15,8 +14,8 @@ source("Analysis/forestPlot_v2/forest_utils.R")
 
 ## set paths
 data_path <- "Analysis/Data/"
-mod_path  <- "Analysis/Models_05/" 
-fig_path  <- "Results/Figures_05/"
+mod_path  <- "Analysis/Models/" 
+fig_path  <- "Results/Figures/"
 if (!dir.exists(fig_path)) dir.create(fig_path, recursive = TRUE)
 
 # Cognition ---------------------------------------------------------------
@@ -151,7 +150,6 @@ ggsave(filename = paste0(fig_path, "Figure4.pdf"),
 datalongMotG <- readRDS(paste0(data_path, "datalongMotG.rds"))
 
 attr(datalongMotG$ano, "label") <- "Year"
-attr(datalongMotG$SCL_M_PAR_T0, "label") <- "Mother's paranoid ideation"
 attr(datalongMotG$Días_ingr_bebe, "label") <- "Days in the hospital"
 
 ## Model

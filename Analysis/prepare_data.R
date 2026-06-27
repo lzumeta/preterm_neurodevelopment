@@ -5,12 +5,14 @@
 ## load packages
 library(tidyverse)
 
-## load cleaned data
-data_nd <- readRDS("Analysis/data_nd_cleaned.rds") 
-
 ## set path
 data_path <- "Analysis/Data/"
 if (!dir.exists(data_path)) dir.create(data_path, recursive = T)
+
+## load cleaned data
+data_nd <- readRDS(paste0(data_path, "data_nd_cleaned.rds"))
+
+
 
 # Cognition ---------------------------------------------------------------
 end_var <- "cog_pes"
