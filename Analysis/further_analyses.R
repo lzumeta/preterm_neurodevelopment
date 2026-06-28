@@ -15,7 +15,7 @@ data_path <- "Analysis/Data/"
 if (!dir.exists(tab_path)) dir.create(tab_path)
 
 ## load data
-data_nd <- readRDS("Analysis/data_nd_cleaned.rds")
+data_nd <- readRDS("Analysis/Data/data_nd_cleaned.rds")
 
 
 # Attrition rates ---------------------------------------------------------
@@ -172,3 +172,100 @@ data_nd |>
   theme(axis.text.x = element_text(angle = 90))
 ggsave(paste0(fig_path, "FigureSXX.pdf"), width = 12, height = 8)
 ggsave(paste0(fig_path, "FigureSXX.jpg"), dpi = 300, width = 12, height = 8)
+
+
+
+# Sensitivity_analyses ----------------------------------------------------
+mod_path <- "Analysis/Models/"
+final_lmm_cog   <- readRDS(paste0(mod_path, "final_lmm_cog.rds"))
+final_lmm_lengr <- readRDS(paste0(mod_path, "final_lmm_lengr.rds"))
+final_lmm_lenge <- readRDS(paste0(mod_path, "final_lmm_lenge.rds"))
+final_lmm_motf  <- readRDS(paste0(mod_path, "final_lmm_motf.rds"))
+final_lmm_motg  <- readRDS(paste0(mod_path, "final_lmm_motg.rds"))
+
+vif(final_lmm_cog)
+vif(final_lmm_lengr)
+vif(final_lmm_lenge)
+vif(final_lmm_motf)
+vif(final_lmm_motg)
+
+# source("Analysis/Sensitivity_analysis.R")
+
+## evaluate the results
+res_path <- "Results/Sens_analyses/"
+## Cognition
+res_sens_cog <- readRDS(paste0(res_path, "Cognition/res_sens_cog.rds"))
+
+df_res_cog <- data.frame(SCL_P_FOB_T0 = c(
+                           table(res_sens_cog)["SCL_P_FOB_T0"]/500*100
+                         ),
+                         PBQ_M_T_T0 = c(
+                           table(res_sens_cog)["PBQ_M_T_T0"]/500*100
+                         ))
+
+## Receptive Language
+res_sens_lengr <- readRDS(paste0(res_path, "ReceptiveLanguage/res_sens_lengr.rds"))
+
+df_res_lengr <- data.frame(PBQ_M_T_T0 = c(
+                             table(res_sens_lengr)["PBQ_M_T_T0"]/500*100
+                           ),
+                           SCL_M_INT_T0 = c(
+                             table(res_sens_lengr)["SCL_M_INT_T0"]/500*100
+                           ),
+                           APG_5min = c(
+                             table(res_sens_lengr)["APG_5min"]/500*100
+                           ),
+                           Pais_origen_M_new = c(
+                             table(res_sens_lengr)["Pais_origen_M_newNon Spanish"]/500*100
+                           ),
+                           SCL_P_FOB_T0 = c(
+                             table(res_sens_lengr)["SCL_P_FOB_T0"]/500*100
+                           )
+)
+
+## Expressive Language
+res_sens_lenge <- readRDS(paste0(res_path, "ExpressiveLanguage/res_sens_lenge.rds"))
+
+df_res_lenge <- data.frame(PBQ_M_T_T0 = c(
+                             table(res_sens_lenge)["PBQ_M_T_T0"]/500*100
+                           ),
+                           SCL_P_FOB_T0 = c(
+                             table(res_sens_lenge)["SCL_P_FOB_T0"]/500*100
+                           ),
+                           SCL_M_INT_T0 = c(
+                             table(res_sens_lenge)["SCL_M_INT_T0"]/500*100
+                           ),
+                           Pais_origen_M_new = c(
+                             table(res_sens_lenge)["Pais_origen_M_newNon Spanish"]/500*100
+                           )
+)
+
+
+## Fine Motor
+res_sens_motf <- readRDS(paste0(res_path, "FineMotor/res_sens_motf.rds"))
+
+df_res_motf <- data.frame(SCL_M_PAR_T0 = c(
+                            table(res_sens_motf)["SCL_M_PAR_T0"]/500*100
+                          ),
+                          Sexo_bebé = c(
+                            table(res_sens_motf)["Sexo_bebéFemale"]/500*100
+                          ))
+
+
+## Gross Motor
+res_sens_motg <- readRDS(paste0(res_path, "GrossMotor/res_sens_motg.rds"))
+
+df_res_motg <- data.frame(Días_ingr_bebe = c(
+                            table(res_sens_motg)["Días_ingr_bebe"]/500*100
+                          )
+)
+
+
+
+df_res_cog
+df_res_lengr
+df_res_lenge
+df_res_motf
+df_res_motg
+
+
